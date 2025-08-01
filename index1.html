@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排名生成器</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        .left-pane {
+            width: 520px;
+            height: 900px;
+            padding: 10px;
+            background-color: LightGray;
+            border: 2px solid LightGray; /* 设置边框宽度、样式和颜色 */
+            margin: 100px;           /* 外边距 */
+            box-sizing: border-box; /* 包括边框和内填充在内的宽高计算 */
+        }
+
+        .right-pane {
+            width: 70%;
+            position: relative;
+            height: 900px;
+            padding: 100px;
+        }
+
+        .background {
+            width: 506px;
+            height: 896px;
+            background-image: url(beijing7.png); /* 请替换为你的背景图片路径 */
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text1 {
+            font-family: Fantasy;
+            text-transform：uppercase; 
+            position: absolute;
+            top: 355px; /* 距离顶部30px */
+            left: 0px; /* 距离左侧20px */
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            padding: 10px;
+            font-size:20px;
+          /*  font-weight: bold;*/
+            color: #5ae6ae;
+            width:100%;
+            
+        }
+
+
+
+        .table-container {
+            
+            position: absolute;
+            top: 403px; /* 排名表格距离顶部500px */
+            left: 170px;
+            right: 0; /* 保持水平居中 */
+            margin: auto;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+
+        }
+        /* 设置表格宽度 */
+        table {
+            width: 92%; /* 表格宽度100% */
+            border-collapse: separate; 
+            border-spacing: 0 5px; /* 设置行间距为10px */
+ /*        border-collapse: collapse;  合并边框 */
+            border: none;
+        }
+        tr {
+            height: 30px; /* 每一行的高度 */
+}
+        th, td {
+            font-size:20px;
+            font-family: Fantasy;  
+            border: none;
+           /* font-weight: bold;*/
+           /* border: 0px solid black;  边框 */
+            padding: 6px; /* 内边距 */
+            text-align: left; /* 左对齐文本 */
+            white-space: nowrap;
+        }
+        /* 设置各列宽度占比 */
+
+table tr td:first-child, 
+table tr th:first-child {
+    display: none; /* 或者可以使用 visibility: hidden;  */
+}
+
+
+       .col1 {
+            width: 45%; /* 第二列占30% */
+        }
+        .col2 {
+            width: 33%; /* 第二列占30% */
+        }
+        .col3 {
+            width: 22%; /* 第三列占30% */
+        }
+
+        .text2 {
+            font-family: Fantasy;
+            text-transform：uppercase;  
+           /* font-weight: bold;*/
+            font-size:15px;
+            color: #e6efeb;
+            position: absolute;
+            bottom: 13px; /* 距离底部20px */
+            left: 20px; /* 距离左侧10px */
+          /*  background-color: rgba(255, 255, 255, 0.8);*/
+            padding: 10px;
+        }
+        .datetime {
+            text-transform：uppercase;  
+            font-weight: bold;
+            font-size:15px;
+            color: #e6efeb;
+            position: absolute;
+            bottom: -5px; /* 距离底部20px */
+            left: 20px; /* 距离左侧10px */
+          /*  background-color: rgba(255, 255, 255, 0.8);*/
+            padding: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+         .text3 {
+            text-transform：uppercase;  
+            font-weight: bold;
+            font-size:15px;
+            color: #e6efeb;
+            position: absolute;
+            bottom: -5px; /* 距离底部20px */
+            left: 20px; /* 距离左侧10px */
+          /*  background-color: rgba(255, 255, 255, 0.8);*/
+            padding: 10px;
+        }
+        .text4 {
+            font-family: Fantasy;
+            text-transform：uppercase;  
+           /* font-weight: bold;*/
+            font-size:23px;
+            color: #e6efeb;
+            position: absolute;
+            top: 5px; /* 距离底部20px */
+            left: 10px; /* 距离左侧10px */
+          /*  background-color: rgba(255, 255, 255, 0.8);*/
+            padding: 10px;
+        }
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed; /* 固定在页面顶部 */
+    top: 0; /* 确保位于顶部 */
+    left: 0; /* 确保位于左侧 */
+    width: 100%; /* 宽度设置为100%以覆盖整个顶部 */
+    z-index: 1000; /* 确保 header 在其他元素之上 */
+}
+
+       nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #555;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #777;
+        }
+    </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+<header>
+    <nav>
+        <a href="index.html">主页</a>
+        <a href="index1.html">排名榜制作</a>
+        <a href="index2.html">荣誉证书制作</a>
+    </nav>
+</header>
+
+
+</div>
+<div class="left-pane">
+    <h1>输入信息</h1>
+    <textarea id="teamInput" placeholder="按行输入队伍名称和数量（每行格式：队伍名称 数量）"></textarea>
+   <button onclick="generateRanking()">生成排名</button>
+   <br>
+
+<p style="color:red;">文本1默认是：<br>( Del 28 de julio al 3 de agosto de 2025 )</p>
+    <input type="text" id="text1Input" placeholder="修改文本1" />
+    <button onclick="modifyText1()">修改文本1</button><br /><br />
+<p style="color:red;">文本2默认是：<br>*Este ranking se actualiza en tiempo real, la hora actual es:</p>
+    <input type="text" id="text2Input" placeholder="修改文本2" />
+    <button onclick="modifyText2()">修改文本2</button>
+ <p style="color:red;">文本3默认是：<br>什么都没有，填写时间后才显示，并且与自动更新的时间会重叠，添加之前请记得先点击隐藏时间的自动显示</p>      
+    <input type="text" id="text3Input" placeholder="手动修改时间" />
+    <button id="toggleTimeBtn">隐藏时间</button> <!-- 添加按钮 -->
+    <button onclick="modifyText3()">手动修改时间</button><br /><br />
+   <button id="saveBtn" style="background-color: red; 
+            color: white;        
+            padding: 6px 40px;  
+            font-size: 20px;    
+            border: none;         
+            border-radius: 5px;  
+            cursor: pointer;    
+            transition: background-color 0.3s; ">点我保存</button>  
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="right-pane">
+    <div class="background">
+        <div class="text1" id="text1" style="text-align: center;">
+            ( Del 28 de julio al 3 de agosto de 2025 )
+        </div>
+
+        <div class="table-container" id="rankingTable">
+            <table border="1">
+                <tr><th class="col1"></th><th class="col2"></th><th class="col3"></th></tr>
+                <!-- 排名数据将在此处生成 -->
+            </table>
+        </div>
+        <div class="text2" id="text2">
+            *Este ranking se actualiza en tiempo real, la hora actual es:
+        </div>
+        <div class="text3" id="text3"></div>
+        <div class="datetime" id="datetime"> 时间更新</div> 
+
+        <div class="text4" id="text4" style="text-align: center;">
+         STARFIRECHARITYFOUNDATION
+        </div>
+
+</div>
+
+<script>
+    let isTimeVisible = true; // 用于跟踪时间显示状态
+
+    function generateRanking() {
+        const teamData = document.getElementById('teamInput').value.trim().split('\n');
+        const table = document.getElementById('rankingTable').getElementsByTagName('table')[0];
+        // 清空表格
+        table.innerHTML = '<tr><th class="col1"></th><th class="col2"></th><th class="col3"></th></tr>';
+
+        teamData.slice(0, 10).forEach((line, index) => {
+            const parts = line.trim().split(/\s+/);
+            if (parts.length >= 2) {
+                const teamName = parts.slice(0, parts.length - 1).join(' ');
+                const score = parts[parts.length - 1];
+                const row = table.insertRow();
+                row.insertCell(0).innerText = index + 1;
+                row.insertCell(1).innerText = teamName;
+                row.insertCell(2).innerText = score;
+            }
+        });
+    }
+
+    function modifyText1() {
+        const newText = document.getElementById('text1Input').value;
+        document.getElementById('text1').innerText = newText;
+    }
+
+    function modifyText2() {
+        const newText = document.getElementById('text2Input').value;
+        document.getElementById('text2').innerText = newText;
+    }
+    function modifyText3() {
+        const newText = document.getElementById('text3Input').value;
+        document.getElementById('text3').innerText = newText;
+    }
+
+
+    function updateTime() {
+        const now = new Date();
+        const formattedTime = now.toLocaleString(); 
+        document.getElementById('datetime').innerText = formattedTime; 
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    document.getElementById('saveBtn').addEventListener('click', function() {
+        const rightPane = document.querySelector('.background');
+        html2canvas(rightPane).then(function(canvas) {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL("image/png");
+            link.download = 'right-pane-image.png';
+            link.click();
+        });
+    });
+
+    // 控制时间显示的按钮事件
+    document.getElementById('toggleTimeBtn').addEventListener('click', function() {
+        const datetimeDiv = document.getElementById('datetime');
+        isTimeVisible = !isTimeVisible; // 切换状态
+
+        if (isTimeVisible) {
+            datetimeDiv.style.display = 'block'; // 显示时间
+            this.innerText = '隐藏时间'; // 更新按钮文本
+        } else {
+            datetimeDiv.style.display = 'none'; // 隐藏时间
+            this.innerText = '显示时间'; // 更新按钮文本
+        }
+    });
+</script>

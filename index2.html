@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息编辑</title>
+
+<style>
+
+
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+#rigtyemian {
+    display: flex;
+    padding: 100px;
+        }
+
+#container {
+    display: flex;
+    padding: 100px;
+
+}
+
+#div1 {
+    width: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+#overlay {
+    position: relative;
+    width: 506px;
+    height: 900px;
+    overflow: hidden; /* 确保头像不会超出边界 */
+}
+
+#div2, #div3, #div4, #div5 {
+    position: absolute;
+    width: 506px;
+    height: 900px;
+}
+
+#div2 {
+    background-image: url(ditu1.png);
+    background-size: cover;
+}
+
+#div3 {
+    background-image: url('avatar.png'); /* 默认头像 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.2s; /* 平滑缩放效果 */
+}
+
+#div4 {
+    background-image: url(ryzs2.png);
+    background-size: cover;
+}
+
+
+
+/* 更新定位 */
+#div6 {
+    position: absolute;
+    top: 460px; /* 距离顶部492px */
+    left: 50%; /* 水平居中 */
+    transform: translateX(-50%); /* 使其水平居中 */
+    color: #3b3a38;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none; /* 去掉下划线 */
+    font-weight: bold; /* 加粗文本 */    
+}
+
+#div8 {
+    
+    position: absolute;
+    top: 660px; /* 距离顶部500px */
+    left: 80px; /* 距离左侧200px */
+    color: #d2aa67;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: underline;
+}
+
+#div7 {
+    position: absolute;
+    top:  660px; /* 距离顶部500px */
+    left: 340px; /* 距离左侧200px */
+    color: #d2aa67;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+#moveButtons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+/* ----------------------------------*/
+.image-container {
+    position: relative;
+    width: 506px; /* 根据图片的实际宽度调整 */
+    height: 900px; /* 根据图片的实际高度调整 */
+    overflow: hidden;
+    background-image: url(''), url(''), url('');
+    background-size: cover; /* 使背景图填满容器 */
+    background-position: center; /* 背景图的位置 */
+}
+
+.image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* 默认为透明 */
+    transition: opacity 0.5s;
+}
+
+.image.active {
+    opacity: 1; /* 显示当前选择的图片 */
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed; /* 固定在页面顶部 */
+    top: 0; /* 确保位于顶部 */
+    left: 0; /* 确保位于左侧 */
+    width: 100%; /* 宽度设置为100%以覆盖整个顶部 */
+    z-index: 1000; /* 确保 header 在其他元素之上 */
+}
+
+       nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #555;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #777;
+        }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">主页</a>
+        <a href="index1.html">排名榜制作</a>
+        <a href="index2.html">荣誉证书制作</a>
+    </nav>
+</header>
+
+<div class="cocol3"></div>
+ 
+    <div id="container">
+<div id="div1">
+  <p>先去背景，背景选择人物主体和背景色差比较大的图片，色差不大的头像可能去背景去不干净</p>
+<a href='https://www.koukoutu.com/removebgtool/al'" target="_blank"> <button>点击去背景的网站</button></a>
+
+     <p>1.在这里上传去完背景的头像，先点击选择文件，然后点击上传</p>
+    <input type="file" id="uploadAvatar" accept="image/*">
+    <button id="uploadAvatarBtn">上传头像</button>
+   <p>2.在这里更改姓名，先输入姓名，然后点击更改</p>
+    <input type="text" id="nameInput" placeholder="输入姓名">
+    <button id="changeNameBtn">改变姓名</button>
+   <p>3.在这里更改日期，先选择日期，然后点击更改</p>
+    <input type="date" id="dateInput">
+    <button id="changeDateBtn">改变日期</button>
+ <p>4.在这里调整头像，通过缩放调整头像大小</p>
+    <label for="scaleSlider">缩放比例:</label>
+    <input type="range" id="scaleSlider" min="0.01" max="1" step="0.01" value="1">
+ <p>5.通过上下左右移动图片位置</p>
+    <div id="moveButtons">
+        <button id="moveUp">上</button>
+        <button id="moveDown">下</button>
+        <button id="moveLeft">左</button>
+        <button id="moveRight">右</button>
+    </div>
+ <p>6.选择团队星级</p>
+ <div class="button-container">
+        <button onclick="showImage('image1')">1星团队</button>
+        <button onclick="showImage('image2')">2星团队</button>
+        <button onclick="showImage('image3')">3星团队</button>
+        <button onclick="showImage('image4')">4星团队</button>
+        <button onclick="showImage('image5')">5星团队</button>
+    </div>
+ <p>7.保存图片</p>
+
+<button id="saveImageBtn">保存图片</button>
+</div>
+</div>
+
+
+<div class="cocol4"></div>
+       <div id="rigtyemian">
+       <div id="overlay">
+            <div id="div2" class="background2"></div>
+            <div id="div3" class="avatar"></div>
+            <div id="div4" class="background3"></div>
+            <div id="div5" class="background4"></div>
+            <div id="div6">Wilmer Sanabria Rojas</div>
+            <div id="div7">2025-07-30</div>
+            <div id="div8">Fundación benéfica Starfire</div>
+    <div id="image-container" class="image-container">
+        <img src="logo1.png" alt="Image 1" class="image" id="image1">
+        <img src="logo2.png" alt="Image 2" class="image" id="image2">
+        <img src="logo3.png" alt="Image 3" class="image" id="image3">
+        <img src="logo4.png" alt="Image 4" class="image" id="image4">
+
+    </div>
+    </div>
+    </div>
+
+
+    <script>
+let scale = 1; // 当前缩放比例
+let offsetX = 0; // 当前X轴偏移
+let offsetY = 0; // 当前Y轴偏移
+
+document.getElementById('uploadAvatarBtn').addEventListener('click', function() {
+    const uploadInput = document.getElementById('uploadAvatar');
+    const avatarDiv = document.getElementById('div3');
+    const file = uploadInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            avatarDiv.style.backgroundImage = `url(${e.target.result})`;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('changeNameBtn').addEventListener('click', function() {
+    const name = document.getElementById('nameInput').value;
+    document.getElementById('div6').innerText = name;
+});
+
+document.getElementById('changeDateBtn').addEventListener('click', function() {
+    const date = document.getElementById('dateInput').value;
+    document.getElementById('div7').innerText = date;
+});
+
+// 移动头像功能
+document.getElementById('moveUp').addEventListener('click', function() {
+    offsetY -= 10; // 向上移动
+    updateAvatarTransform();
+});
+
+document.getElementById('moveDown').addEventListener('click', function() {
+    offsetY += 10; // 向下移动
+    updateAvatarTransform();
+});
+
+document.getElementById('moveLeft').addEventListener('click', function() {
+    offsetX -= 10; // 向左移动
+    updateAvatarTransform();
+});
+
+document.getElementById('moveRight').addEventListener('click', function() {
+    offsetX += 10; // 向右移动
+    updateAvatarTransform();
+});
+
+// 使用滑动条缩放
+document.getElementById('scaleSlider').addEventListener('input', function(event) {
+    scale = event.target.value; // 获取滑动条的值
+    updateAvatarTransform();
+});
+
+// 更新头像的转换
+function updateAvatarTransform() {
+    document.getElementById('div3').style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+
+//-------------------------------------------------------------------------------
+// script.js
+function showImage(imageId) {
+    // 获取所有图片元素
+    const images = document.querySelectorAll('.image');
+
+    // 隐藏所有图片
+    images.forEach(image => {
+        image.classList.remove('active');
+    });
+
+    // 显示指定的图片
+    const selectedImage = document.getElementById(imageId);
+    if (selectedImage) {
+        selectedImage.classList.add('active');
+    }
+}
+//--------------------保存图片功能-------------------------------------
+document.getElementById('saveImageBtn').addEventListener('click', function() {
+    const overlay = document.getElementById('overlay');
+
+    html2canvas(overlay, {
+        useCORS: true,
+        scale: 2 // Increase the scale for better quality
+    }).then(canvas => {
+        // 创建一个下载链接
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'overlay_image.png'; // 设置下载的文件名
+        link.click(); // 触发下载
+    });
+});
+
+
+</script>
+</body>
+</html>
