@@ -329,7 +329,20 @@ document.getElementById('saveImageBtn').addEventListener('click', function() {
     });
 });
 
+//--------------------保存图片功能-------------------------------------
+function updateDate() {
+            const div = document.getElementById("div7");
+            const now = new Date();
+            // 获取本地时间并格式化为 YYYY-MM-DD
+            const formattedDate = now.toLocaleDateString('zh-CN'); // 使用本地日期格式
+            div.textContent = formattedDate;
+        }
 
+        // 每秒更新时间，虽然日期每天只变一次
+        setInterval(updateDate, 1000);
+
+        // 初始更新
+        window.onload = updateDate;
 </script>
 </body>
 </html>
